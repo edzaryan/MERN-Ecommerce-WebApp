@@ -1,24 +1,24 @@
-import { useLocation } from "react-router-dom";
-import SummaryApi from "../common";
-import {useEffect, useState} from "react";
-import VerticalCard from "../components/VerticalCard";
+import { useLocation } from "react-router-dom"
+import SummaryApi from "../common"
+import {useEffect, useState} from "react"
+import VerticalCard from "../components/VerticalCard"
 
 
-const SearchProduct = () => {
-    const query = useLocation();
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
+const SearchProductPage = () => {
+    const query = useLocation()
+    const [data, setData] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        fetchProduct();
-    }, [query]);
+        fetchProduct()
+    }, [query])
 
     const fetchProduct = async () => {
-        setLoading(true);
-        const response = await fetch(`${SummaryApi.searchProduct.url + query.search}`);
-        const dataResponse = await response.json();
-        setData(dataResponse.data);
-        setLoading(false);
+        setLoading(true)
+        const response = await fetch(`${SummaryApi.searchProduct.url + query.search}`)
+        const dataResponse = await response.json()
+        setData(dataResponse.data)
+        setLoading(false)
     }
 
     return (
@@ -44,7 +44,7 @@ const SearchProduct = () => {
             }
         </div>
     )
-};
+}
 
 
-export default SearchProduct;
+export default SearchProductPage

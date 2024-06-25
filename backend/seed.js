@@ -1,75 +1,75 @@
-const cloudinary = require('cloudinary').v2;
-const fs = require('fs');
-const path = require('path');
-const mongoose = require("mongoose");
-const connectDB = require("./config/db");
-const Product = require("./models/productModel");
-require("dotenv").config();
+const cloudinary = require("cloudinary").v2
+const fs = require("fs")
+const path = require("path")
+const mongoose = require("mongoose")
+const connectDB = require("./config/db")
+const Product = require("./models/productModel")
+require("dotenv").config()
 
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
-});
+})
 
 
 const uploadImage = (filePath) => {
     return new Promise((resolve, reject) => {
         cloudinary.uploader.upload(filePath, (error, result) => {
-            if (error) return reject(error);
-            resolve(result.secure_url);
-        });
-    });
-};
+            if (error) return reject(error)
+            resolve(result.secure_url)
+        })
+    })
+}
 
 
 const uploadImagesFromFolder = async (folderPath) => {
-    const imageFiles = fs.readdirSync(folderPath);
+    const imageFiles = fs.readdirSync(folderPath)
     const imageUrls = await Promise.all(imageFiles.map(file => {
-        const filePath = path.join(folderPath, file);
-        return uploadImage(filePath);
-    }));
+        const filePath = path.join(folderPath, file)
+        return uploadImage(filePath)
+    }))
 
-    return imageUrls;
-};
+    return imageUrls
+}
 
 
 async function seedDatabase() {
-    const Product = require("./models/productModel");
+    const Product = require("./models/productModel")
 
     try {
-        const baseFolderPath = path.join(__dirname, "assets");
-        const airpodesFolderPath = path.join(baseFolderPath, "airpodes");
-        const camerasFolderPath = path.join(baseFolderPath, "cameras");
-        const earphonesFolderPath = path.join(baseFolderPath, "earphones");
-        const mobilesFolderPath = path.join(baseFolderPath, "mobiles");
-        const mousesFolderPath = path.join(baseFolderPath, "mouses");
-        const printersFolderPath = path.join(baseFolderPath, "printers");
-        const processorsFolderPath = path.join(baseFolderPath, "processors");
-        const refrigeratorsFolderPath = path.join(baseFolderPath, "refrigerators");
-        const speakersFolderPath = path.join(baseFolderPath, "speakers");
-        const trimmersFolderPath = path.join(baseFolderPath, "trimmers");
-        const tvFolderPath = path.join(baseFolderPath, "tv");
-        const watchesFolderPath = path.join(baseFolderPath, "watches");
+        const baseFolderPath = path.join(__dirname, "assets")
+        const airpodesFolderPath = path.join(baseFolderPath, "airpodes")
+        const camerasFolderPath = path.join(baseFolderPath, "cameras")
+        const earphonesFolderPath = path.join(baseFolderPath, "earphones")
+        const mobilesFolderPath = path.join(baseFolderPath, "mobiles")
+        const mousesFolderPath = path.join(baseFolderPath, "mouses")
+        const printersFolderPath = path.join(baseFolderPath, "printers")
+        const processorsFolderPath = path.join(baseFolderPath, "processors")
+        const refrigeratorsFolderPath = path.join(baseFolderPath, "refrigerators")
+        const speakersFolderPath = path.join(baseFolderPath, "speakers")
+        const trimmersFolderPath = path.join(baseFolderPath, "trimmers")
+        const tvFolderPath = path.join(baseFolderPath, "tv")
+        const watchesFolderPath = path.join(baseFolderPath, "watches")
 
-        const airpodesImages = await uploadImagesFromFolder(airpodesFolderPath);
-        const camerasImages = await uploadImagesFromFolder(camerasFolderPath);
-        const earphonesImages = await uploadImagesFromFolder(earphonesFolderPath);
-        const mousesImages = await uploadImagesFromFolder(mousesFolderPath);
-        const printersImages = await uploadImagesFromFolder(printersFolderPath);
-        const processorsImages = await uploadImagesFromFolder(processorsFolderPath);
-        const mobilesImages = await uploadImagesFromFolder(mobilesFolderPath);
-        const refrigeratorsImages = await uploadImagesFromFolder(refrigeratorsFolderPath);
-        const speakersImages = await uploadImagesFromFolder(speakersFolderPath);
-        const trimmersImages = await uploadImagesFromFolder(trimmersFolderPath);
-        const tvImages = await uploadImagesFromFolder(tvFolderPath);
-        const watchesImages = await uploadImagesFromFolder(watchesFolderPath);
+        const airpodesImages = await uploadImagesFromFolder(airpodesFolderPath)
+        const camerasImages = await uploadImagesFromFolder(camerasFolderPath)
+        const earphonesImages = await uploadImagesFromFolder(earphonesFolderPath)
+        const mousesImages = await uploadImagesFromFolder(mousesFolderPath)
+        const printersImages = await uploadImagesFromFolder(printersFolderPath)
+        const processorsImages = await uploadImagesFromFolder(processorsFolderPath)
+        const mobilesImages = await uploadImagesFromFolder(mobilesFolderPath)
+        const refrigeratorsImages = await uploadImagesFromFolder(refrigeratorsFolderPath)
+        const speakersImages = await uploadImagesFromFolder(speakersFolderPath)
+        const trimmersImages = await uploadImagesFromFolder(trimmersFolderPath)
+        const tvImages = await uploadImagesFromFolder(tvFolderPath)
+        const watchesImages = await uploadImagesFromFolder(watchesFolderPath)
 
         const getRandomImages = (images, count) => {
-            const shuffled = images.sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, count);
-        };
+            const shuffled = images.sort(() => 0.5 - Math.random())
+            return shuffled.slice(0, count)
+        }
 
         const airpodes = [
             {
@@ -153,7 +153,7 @@ async function seedDatabase() {
                 price: 149,
                 sellingPrice: 129
             }
-        ];
+        ]
 
         const cameras = [
                 {
@@ -291,7 +291,7 @@ async function seedDatabase() {
                 price: 749,
                 sellingPrice: 699
             },
-        ];
+        ]
 
         const earphones = [
                 {
@@ -429,7 +429,7 @@ async function seedDatabase() {
                 price: 199,
                 sellingPrice: 179
             },
-        ];
+        ]
 
         const mouses = [
             {
@@ -513,7 +513,7 @@ async function seedDatabase() {
                 price: 99,
                 sellingPrice: 89
             },
-        ];
+        ]
 
         const printers = [
             {
@@ -624,7 +624,7 @@ async function seedDatabase() {
                 price: 129,
                 sellingPrice: 119
             },
-        ];
+        ]
 
         const mobiles = [
             {
@@ -735,7 +735,7 @@ async function seedDatabase() {
                 price: 599,
                 sellingPrice: 549
             },
-        ];
+        ]
 
         const processors = [
             {
@@ -882,7 +882,7 @@ async function seedDatabase() {
                 price: 99,
                 sellingPrice: 89
             },
-        ];
+        ]
 
         const refrigerators = [
             {
@@ -1038,7 +1038,7 @@ async function seedDatabase() {
                 price: 1499,
                 sellingPrice: 1399
             },
-        ];
+        ]
 
         const speakers = [
             {
@@ -1114,7 +1114,7 @@ async function seedDatabase() {
                 sellingPrice: 279
             },
             {
-                productName: "Bose Home Speaker 500",
+                productName: "Bose HomePage Speaker 500",
                 brandName: "Bose",
                 category: "speaker",
                 productImage: getRandomImages(speakersImages, 4),
@@ -1149,7 +1149,7 @@ async function seedDatabase() {
                 price: 250,
                 sellingPrice: 230
             },
-        ];
+        ]
 
         const trimmers = [
             {
@@ -1260,7 +1260,7 @@ async function seedDatabase() {
                 price: 69,
                 sellingPrice: 59
             },
-        ];
+        ]
 
         const televisions = [
             {
@@ -1344,7 +1344,7 @@ async function seedDatabase() {
                 price: 1099,
                 sellingPrice: 999
             },
-        ];
+        ]
 
         const watches = [
             {
@@ -1428,61 +1428,59 @@ async function seedDatabase() {
                 price: 399,
                 sellingPrice: 369
             }
-        ];
+        ]
 
-        await Product.insertMany(airpodes);
-        await Product.insertMany(cameras);
-        await Product.insertMany(earphones);
-        await Product.insertMany(mouses);
-        await Product.insertMany(printers);
-        await Product.insertMany(mobiles);
-        await Product.insertMany(processors);
-        await Product.insertMany(refrigerators);
-        await Product.insertMany(trimmers);
-        await Product.insertMany(televisions);
-        await Product.insertMany(watches);
-        await Product.insertMany(speakers);
+        await Product.insertMany(airpodes)
+        await Product.insertMany(cameras)
+        await Product.insertMany(earphones)
+        await Product.insertMany(mouses)
+        await Product.insertMany(printers)
+        await Product.insertMany(mobiles)
+        await Product.insertMany(processors)
+        await Product.insertMany(refrigerators)
+        await Product.insertMany(trimmers)
+        await Product.insertMany(televisions)
+        await Product.insertMany(watches)
+        await Product.insertMany(speakers)
 
-        console.log("Data successfully seeded");
+        console.log("Data successfully seeded")
     } catch (err) {
-        console.error("Error seeding data:", err);
+        console.error("Error seeding data:", err)
     } finally {
-        mongoose.connection.close();
+        mongoose.connection.close()
     }
-};
+}
 
 
 const deleteAllResourcesFromCloudinary = async () => {
     try {
-        let resources = await cloudinary.api.resources({ max_results: 500 });
+        let resources = await cloudinary.api.resources({max_results: 500})
 
         while (resources.resources.length > 0) {
-            const publicIds = resources.resources.map(resource => resource.public_id);
+            const publicIds = resources.resources.map(resource => resource.public_id)
 
-            // Split the publicIds into chunks of 100
-            const chunkSize = 100;
+            const chunkSize = 100
             for (let i = 0; i < publicIds.length; i += chunkSize) {
-                const chunk = publicIds.slice(i, i + chunkSize);
-                await cloudinary.api.delete_resources(chunk);
+                const chunk = publicIds.slice(i, i + chunkSize)
+                await cloudinary.api.delete_resources(chunk)
             }
 
-            // Fetch the next set of resources
-            resources = await cloudinary.api.resources({ max_results: 500 });
+            resources = await cloudinary.api.resources({max_results: 500})
         }
 
-        console.log('All resources have been deleted.');
+        console.log("All resources have been deleted.");
     } catch (error) {
-        console.error('Error deleting resources:', error);
+        console.error("Error deleting resources:", error);
     }
-};
+}
 
 const deleteAllResourcesFromDatabase = async () => {
-    await Product.deleteMany({});
-};
+    await Product.deleteMany({})
+}
 
 
 connectDB()
     .then(deleteAllResourcesFromCloudinary)
     .then(deleteAllResourcesFromDatabase)
     .then(seedDatabase)
-    .catch(err => console.error("Error connecting to database:", err));
+    .catch(err => console.error("Error connecting to database:", err))

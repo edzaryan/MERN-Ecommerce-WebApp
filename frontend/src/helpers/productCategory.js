@@ -13,7 +13,7 @@ const productCategory = [
     { id: 10, label: "Trimmer", value: "trimmer" },
     { id: 11, label: "Television", value: "television" },
     { id: 12, label: "Watch", value: "watch" },
-];
+]
 
 
-export default productCategory;
+export default productCategory

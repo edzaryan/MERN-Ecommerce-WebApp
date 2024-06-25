@@ -1,17 +1,17 @@
-import React, {useState} from "react";
-import {CgClose} from "react-icons/cg";
-import {FaCloudUploadAlt} from "react-icons/fa";
-import {MdDelete} from "react-icons/md";
-import DisplayImage from "./DisplayImage";
-import {toast} from "react-toastify";
-import productCategory from "../helpers/productCategory";
-import uploadImage from "../helpers/uploadImage";
-import SummaryApi from "../common";
+import React, {useState} from "react"
+import {CgClose} from "react-icons/cg"
+import {FaCloudUploadAlt} from "react-icons/fa"
+import {MdDelete} from "react-icons/md"
+import DisplayImage from "./DisplayImage"
+import {toast} from "react-toastify"
+import productCategory from "../helpers/productCategory"
+import uploadImage from "../helpers/uploadImage"
+import SummaryApi from "../common"
 
 
 const AdminEditProduct = ({ onClose, productData, fetchData }) => {
-    const [openFullScreenImage, setOpenFullScreenImage] = useState(false);
-    const [fullScreenImage, setFullScreenImage] = useState("");
+    const [openFullScreenImage, setOpenFullScreenImage] = useState(false)
+    const [fullScreenImage, setFullScreenImage] = useState("")
     const [data, setData] = useState({
       ...productData,
       productName: productData?.productName,
@@ -24,52 +24,45 @@ const AdminEditProduct = ({ onClose, productData, fetchData }) => {
     });
 
     const handleOnChange = (e) => {
-      const { name, value } = e.target;
+      const { name, value } = e.target
 
-      setData(prev => ({
-        ...prev,
-        [name]: value
-      }));
-    };
+      setData(prev => ({...prev, [name]: value}));
+    }
 
     const handleUploadProduct = async (e) => {
-      const file = e.target.files[0];
-      const { url } = await uploadImage(file);
+      const file = e.target.files[0]
+      const {url} = await uploadImage(file)
 
-      setData(prev => ({
-        ...prev,
-        productImage: [...prev.productImage, url]
-      }));
-    };
+      setData(prev => ({...prev, productImage: [...prev.productImage, url]}))
+    }
 
     const handleDeleteProductImage = async (index) => {
-      const newProdutImage = [...data.productImage];
-      newProdutImage.splice(index, 1);
-
-      setData(prev => { return { ...prev, productImage: [...newProdutImage] }});
-    };
+      const newProductImage = [...data.productImage]
+      newProductImage.splice(index, 1)
+      setData(prev => { return {...prev, productImage: [...newProductImage]}})
+    }
 
     const handleSubmit = async (e) => {
-      e.preventDefault();
+      e.preventDefault()
 
       const response = await fetch(SummaryApi.updateProduct.url, {
         method: SummaryApi.updateProduct.method,
         credentials: "include",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(data)
-      });
+      })
 
-      const responseData = await response.json();
+      const responseData = await response.json()
 
       if(response.ok) {
-        toast.success(responseData?.message);
-        fetchData();
+        toast.success(responseData?.message)
+        fetchData()
       } else {
-        toast.error(responseData?.message);
+        toast.error(responseData?.message)
       }
 
-      onClose();
-    };
+      onClose()
+    }
 
 
     return (
@@ -197,8 +190,8 @@ const AdminEditProduct = ({ onClose, productData, fetchData }) => {
                 {openFullScreenImage && <DisplayImage imgUrl={fullScreenImage} onClose={() => setOpenFullScreenImage(false)} />}
             </div>
         </div>
-    );
-};
+    )
+}
 
 
-export default AdminEditProduct;
+export default AdminEditProduct

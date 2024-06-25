@@ -1,39 +1,40 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import productCategory from "../helpers/productCategory";
-import { useEffect, useState } from "react";
-import VerticalCard from "../components/VerticalCard";
-import SummaryApi from "../common";
+import { useLocation, useNavigate } from "react-router-dom"
+import productCategory from "../helpers/productCategory"
+import { useEffect, useState } from "react"
+import VerticalCard from "../components/VerticalCard"
+import SummaryApi from "../common"
 
-const CategoryProduct = () => {
-    const [data, setData] = useState([]);
+
+const CategoryProductPage = () => {
+    const [data, setData] = useState([])
     const [loading, setLoading] = useState(false);
-    const [selectedCategories, setSelectedCategories] = useState([]);
-    const location = useLocation();
-    const navigate = useNavigate();
-    const urlSearch = new URLSearchParams(location.search);
-    const urlCategoryListInArray = urlSearch.getAll("category");
-    const [sortBy, setSortBy] = useState(urlSearch.get("sortBy") || "asc");
+    const [selectedCategories, setSelectedCategories] = useState([])
+    const location = useLocation()
+    const navigate = useNavigate()
+    const urlSearch = new URLSearchParams(location.search)
+    const urlCategoryListInArray = urlSearch.getAll("category")
+    const [sortBy, setSortBy] = useState(urlSearch.get("sortBy") || "asc")
 
     useEffect(() => {
         if (urlCategoryListInArray.length > 0) {
-            setSelectedCategories(urlCategoryListInArray);
+            setSelectedCategories(urlCategoryListInArray)
         }
-    }, []);
+    }, [])
 
     useEffect(() => {
-        fetchData();
-    }, [selectedCategories, sortBy]);
+        fetchData()
+    }, [selectedCategories, sortBy])
 
     useEffect(() => {
-        const searchParams = new URLSearchParams();
-        selectedCategories.forEach(category => searchParams.append("category", category));
-        searchParams.set("sortBy", sortBy);
-        navigate({ search: searchParams.toString() });
-    }, [selectedCategories, sortBy]);
+        const searchParams = new URLSearchParams()
+        selectedCategories.forEach(category => searchParams.append("category", category))
+        searchParams.set("sortBy", sortBy)
+        navigate({ search: searchParams.toString() })
+    }, [selectedCategories, sortBy])
 
     const fetchData = async () => {
         try {
-            setLoading(true);
+            setLoading(true)
 
             const response = await fetch(SummaryApi.filterProduct.url, {
                 method: SummaryApi.filterProduct.method,
@@ -44,31 +45,31 @@ const CategoryProduct = () => {
                     category: selectedCategories,
                     sortBy: sortBy
                 })
-            });
+            })
 
-            const dataResponse = await response.json();
-            setData(dataResponse?.data || []);
+            const dataResponse = await response.json()
+            setData(dataResponse?.data || [])
             setLoading(false);
         } catch (err) {
-            console.error(err);
-            setLoading(false);
+            console.error(err)
+            setLoading(false)
         }
-    };
+    }
 
     const handleSelectCategory = ({ target: { value, checked } }) => {
         setSelectedCategories(prev => {
             if (checked) {
-                return [...prev, value];
+                return [...prev, value]
             } else {
-                return prev.filter(category => category !== value);
+                return prev.filter(category => category !== value)
             }
-        });
-    };
+        })
+    }
 
     const handleOnChangeSortBy = (e) => {
-        const { value } = e.target;
-        setSortBy(value);
-    };
+        const { value } = e.target
+        setSortBy(value)
+    }
 
     return (
         <div className="container mx-auto p-4">
@@ -133,7 +134,8 @@ const CategoryProduct = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default CategoryProduct;
+
+export default CategoryProductPage

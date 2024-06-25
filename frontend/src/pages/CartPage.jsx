@@ -1,21 +1,22 @@
-import { useContext, useEffect, useState } from "react";
-import SummaryApi from "../common";
-import Context from "../context";
-import displayINRCurrency from "../helpers/displayCurrency";
-import { MdDelete } from "react-icons/md";
+import { useContext, useEffect, useState } from "react"
+import SummaryApi from "../common"
+import Context from "../context"
+import displayINRCurrency from "../helpers/displayCurrency"
+import { MdDelete } from "react-icons/md"
 
-const Cart = () => {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const context = useContext(Context);
-    const loadingCart = new Array(13).fill(null);
+
+const CartPage = () => {
+    const [data, setData] = useState([])
+    const [loading, setLoading] = useState(true)
+    const context = useContext(Context)
+    const loadingCart = new Array(13).fill(null)
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        fetchData()
+    }, [])
 
     const fetchData = async () => {
-        setLoading(true);
+        setLoading(true)
 
         try {
             const response = await fetch(SummaryApi.addToCartProductView.url, {
@@ -24,24 +25,24 @@ const Cart = () => {
                 headers: {
                     "Content-Type": "application/json"
                 }
-            });
+            })
 
-            const responseData = await response.json();
+            const responseData = await response.json()
 
             if (response.ok) {
-                setData(responseData.data);
+                setData(responseData.data)
             } else {
-                console.error("Error fetching data:", responseData.message);
+                console.error("Error fetching data:", responseData.message)
             }
         } catch (error) {
-            console.error("Error fetching data:", error);
+            console.error("Error fetching data:", error)
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    };
+    }
 
     const updateQty = async (id, qty) => {
-        setLoading(true);
+        setLoading(true)
 
         try {
             const response = await fetch(`${SummaryApi.updateCartProduct.url}`, {
@@ -54,34 +55,34 @@ const Cart = () => {
                     _id: id,
                     quantity: qty
                 })
-            });
+            })
 
-            const responseData = await response.json();
+            const responseData = await response.json()
 
             if (responseData.success) {
-                fetchData();
+                fetchData()
             } else {
-                console.error("Error updating quantity:", responseData.message);
+                console.error("Error updating quantity:", responseData.message)
             }
         } catch (error) {
-            console.error("Error updating quantity:", error);
+            console.error("Error updating quantity:", error)
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    };
+    }
 
     const increaseQty = (id, qty) => {
-        updateQty(id, qty + 1);
-    };
+        updateQty(id, qty + 1)
+    }
 
     const decreaseQty = (id, qty) => {
         if (qty > 1) {
-            updateQty(id, qty - 1);
+            updateQty(id, qty - 1)
         }
-    };
+    }
 
     const deleteCartProduct = async (id) => {
-        setLoading(true);
+        setLoading(true)
 
         try {
             const response = await fetch(SummaryApi.deleteCartProduct.url, {
@@ -91,25 +92,25 @@ const Cart = () => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ _id: id })
-            });
+            })
 
-            const responseData = await response.json();
+            const responseData = await response.json()
 
             if (responseData.success) {
-                fetchData();
-                context.fetchUserAddToCart();
+                fetchData()
+                context.fetchUserAddToCart()
             } else {
-                console.error("Error deleting product:", responseData.message);
+                console.error("Error deleting product:", responseData.message)
             }
         } catch (error) {
-            console.error("Error deleting product:", error);
+            console.error("Error deleting product:", error)
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    };
+    }
 
-    const totalQty = data.reduce((prev, curr) => prev + curr.quantity, 0);
-    const totalPrice = data.reduce((prev, curr) => prev + (curr.quantity * (curr?.productId?.sellingPrice || 0)), 0);
+    const totalQty = data.reduce((prev, curr) => prev + curr.quantity, 0)
+    const totalPrice = data.reduce((prev, curr) => prev + (curr.quantity * (curr?.productId?.sellingPrice || 0)), 0)
 
     return (
         <div className="container mx-auto">
@@ -185,7 +186,8 @@ const Cart = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Cart;
+
+export default CartPage

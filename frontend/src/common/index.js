@@ -1,5 +1,5 @@
 
-const backendDomain = "http://localhost:8080";
+const backendDomain = "http://localhost:8080"
 
 
 const SummaryApi = {
@@ -79,7 +79,7 @@ const SummaryApi = {
         url: `${backendDomain}/api/filter-product`,
         method: "post"
     }
-};
+}
 
 
-export default SummaryApi;
+export default SummaryApi

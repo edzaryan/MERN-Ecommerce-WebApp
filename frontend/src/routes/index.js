@@ -1,16 +1,16 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import SignUp from "../pages/SignUp";
-import ForgotPassword from "../pages/ForgotPassword";
-import AdminPanel from "../pages/AdminPanel";
-import AllUsers from "../pages/AllUsers";
-import AllProducts from "../pages/AllProducts";
-import CategoryProduct from "../pages/CategoryProduct";
-import ProductDetails from "../pages/ProductDetails";
-import Cart from "../pages/Cart";
-import SearchProduct from "../pages/SearchProduct";
+import { createBrowserRouter } from "react-router-dom"
+import App from "../App"
+import HomePage from "../pages/HomePage"
+import LoginPage from "../pages/LoginPage"
+import SignUpPage from "../pages/SignUpPage"
+import ForgotPasswordPage from "../pages/ForgotPasswordPage"
+import AdminPanelPage from "../pages/AdminPanelPage"
+import AllUsersPage from "../pages/AllUsersPage"
+import AllProductsPage from "../pages/AllProductsPage"
+import CategoryProductPage from "../pages/CategoryProductPage"
+import ProductDetailsPage from "../pages/ProductDetailsPage"
+import CartPage from "../pages/CartPage"
+import SearchProductPage from "../pages/SearchProductPage"
 
 
 const router = createBrowserRouter([
@@ -20,53 +20,53 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "",
-                element: <Home />
+                element: <HomePage />
             },
             {
                 path: "login",
-                element: <Login />
+                element: <LoginPage />
             },
             {
                 path: "forgot-password",
-                element: <ForgotPassword />
+                element: <ForgotPasswordPage />
             },
             {
                 path: "signup",
-                element: <SignUp />
+                element: <SignUpPage />
             },
             {
                 path: "product-category",
-                element: <CategoryProduct />
+                element: <CategoryProductPage />
             },
             {
                 path: "cart",
-                element: <Cart />
+                element: <CartPage />
             },
             {
                 path: "product/:id",
-                element: <ProductDetails />
+                element: <ProductDetailsPage />
             },
             {
                 path: "search",
-                element: <SearchProduct />
+                element: <SearchProductPage />
             },
             {
                 path: "admin-panel",
-                element: <AdminPanel />,
+                element: <AdminPanelPage />,
                 children: [
                     {
                         path: "all-users",
-                        element: <AllUsers />
+                        element: <AllUsersPage />
                     },
                     {
                         path: "all-products",
-                        element: <AllProducts />
+                        element: <AllProductsPage />
                     }
                 ]
             }
         ]
     }
-]);
+])
 
 
-export default router;
+export default router

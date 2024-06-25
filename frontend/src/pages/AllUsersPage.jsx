@@ -1,41 +1,41 @@
-import { useEffect, useState } from "react";
-import SummaryApi from "../common";
-import { toast } from "react-toastify";
-import moment from "moment";
-import { MdModeEdit } from "react-icons/md";
-import ChangeUserRole from "../components/ChangeUserRole";
+import { useEffect, useState } from "react"
+import SummaryApi from "../common"
+import { toast } from "react-toastify"
+import moment from "moment"
+import { MdModeEdit } from "react-icons/md"
+import ChangeUserRole from "../components/ChangeUserRole"
 
 
-const AllUsers = () => {
-  const [allUsers, setAllUsers] = useState([]);
-  const [openUpdateRole, setOpenUpdateRole] = useState(false);
+const AllUsersPage = () => {
+  const [allUsers, setAllUsers] = useState([])
+  const [openUpdateRole, setOpenUpdateRole] = useState(false)
   const [updateUserDetails, setUpdateUserDetails] = useState({
     _id: "",
     email: "",
     name: "",
     role: ""
-  });
+  })
 
 
   const fetchAllUsers = async () => {
     const fetchData = await fetch(SummaryApi.allUser.url, {
       method: SummaryApi.allUser.method,
       credentials: "include"
-    });
+    })
 
-    const dataResponse = await fetchData.json();
+    const dataResponse = await fetchData.json()
 
     if (dataResponse.success) {
-      setAllUsers(dataResponse.data);
+      setAllUsers(dataResponse.data)
     }
 
     if (dataResponse.error) {
-      toast.error(dataResponse.message);
+      toast.error(dataResponse.message)
     }
   };
 
   useEffect(() => {
-    fetchAllUsers();
+    fetchAllUsers()
   }, []);
 
 
@@ -92,6 +92,7 @@ const AllUsers = () => {
       }  
     </div>
   )
-};
+}
 
-export default AllUsers;
+
+export default AllUsersPage

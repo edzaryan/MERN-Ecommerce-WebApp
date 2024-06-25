@@ -1,7 +1,7 @@
-import SummaryApi from "../common";
+import SummaryApi from "../common"
 
 
-const fetchCategoryWiseProduct = async (category) => {
+const fetchCategoryWiseProduct = async category => {
     const response = await fetch(SummaryApi.categoryWiseProduct.url, {
         method: SummaryApi.categoryWiseProduct.method,
         headers: {
@@ -12,13 +12,13 @@ const fetchCategoryWiseProduct = async (category) => {
         })
     });
 
-    const dataResponse = await response.json();
+    const dataResponse = await response.json()
 
-    console.log(SummaryApi.categoryWiseProduct.url);
+    console.log(SummaryApi.categoryWiseProduct.url)
 
-    return dataResponse;
-};
+    return dataResponse
+}
 
 
-export default fetchCategoryWiseProduct;
+export default fetchCategoryWiseProduct
 

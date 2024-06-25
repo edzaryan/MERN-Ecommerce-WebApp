@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react";
-import SummaryApi from "../common";
-import { Link } from "react-router-dom";
+import {useEffect, useState} from "react"
+import SummaryApi from "../common"
+import {Link} from "react-router-dom"
 
 
 const CategoryList = () => {
-    const [categoryProduct, setCategoryProduct] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [categoryProduct, setCategoryProduct] = useState([])
+    const [loading, setLoading] = useState(true)
 
-    const categoryLoading = new Array(13).fill(null);
+    const categoryLoading = new Array(13).fill(null)
 
     const fetchCategoryProduct = async () => {
-        setLoading(true);
-        const response = await fetch(SummaryApi.categoryProduct.url);
-        const dataResponse = await response.json();
-        setCategoryProduct(dataResponse.data);
-        setLoading(false);
+        setLoading(true)
+        const response = await fetch(SummaryApi.categoryProduct.url)
+        const dataResponse = await response.json()
+        setCategoryProduct(dataResponse.data)
+        setLoading(false)
     }
 
     useEffect(() => {
-        fetchCategoryProduct();
-    }, []);
+        fetchCategoryProduct()
+    }, [])
 
     return (
         <div className="container mx-auto p-4">
@@ -27,10 +27,7 @@ const CategoryList = () => {
                 {
                     loading ? (
                         categoryLoading.map((_, index) => (
-                            <div
-                                className="h-16 w-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-slate-200 animate-pulse"
-                                key={`categoryLoading-${index}`}
-                            />
+                            <div className="h-16 w-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-slate-200 animate-pulse" key={`categoryLoading-${index}`} />
                         ))
                     ) : (
                         categoryProduct.map((product, index) => (
@@ -50,7 +47,7 @@ const CategoryList = () => {
             </div>
         </div>
     )
-};
+}
 
 
-export default CategoryList;
+export default CategoryList

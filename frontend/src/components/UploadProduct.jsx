@@ -1,18 +1,17 @@
-import React, { useState } from "react";
-import productCategory from "../helpers/productCategory";
-import uploadImage from "../helpers/uploadImage";
-import DisplayImage from "./DisplayImage";
-import { CgClose } from "react-icons/cg";
-import { FaCloudUploadAlt } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import SummaryApi from "../common";
-import { toast } from "react-toastify";
+import React, {useState} from "react"
+import productCategory from "../helpers/productCategory"
+import uploadImage from "../helpers/uploadImage"
+import DisplayImage from "./DisplayImage"
+import {CgClose} from "react-icons/cg"
+import {FaCloudUploadAlt} from "react-icons/fa"
+import {MdDelete} from "react-icons/md"
+import SummaryApi from "../common"
+import {toast} from "react-toastify"
 
 
 const UploadProduct = ({ onClose, fetchData }) => {
-
-    const [openFullScreenImage, setOpenFullScreenImage] = useState(false);
-    const [fullScreenImage, setFullScreenImage] = useState("");
+    const [openFullScreenImage, setOpenFullScreenImage] = useState(false)
+    const [fullScreenImage, setFullScreenImage] = useState("")
     const [data, setData] = useState({
         productName: "",
         brandName: "",
@@ -21,60 +20,53 @@ const UploadProduct = ({ onClose, fetchData }) => {
         description: "",
         price: "",
         sellingPrice: ""
-    });
+    })
     
 
     const handleOnChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value } = e.target
 
-        setData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+        setData(prev => ({...prev, [name]: value}))
+    }
 
     const handleUploadProduct = async (e) => {
-        const file = e.target.files[0];
-        const { url } = await uploadImage(file);
+        const file = e.target.files[0]
+        const {url} = await uploadImage(file)
         
-        setData(prev => ({
-            ...prev,
-            productImage: [...prev.productImage, url]
-        }));
-    };
+        setData(prev => ({...prev, productImage: [...prev.productImage, url]}))
+    }
     
     const handleDeleteProductImage = async (index) => {
-        const newProdutImage = [...data.productImage];
-        newProdutImage.splice(index, 1);
-
-        setData(prev => { return { ...prev, productImage: [...newProdutImage] }});
-    };
+        const newProductImage = [...data.productImage]
+        newProductImage.splice(index, 1)
+        setData(prev => { return { ...prev, productImage: [...newProductImage] }})
+    }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         const response = await fetch(SummaryApi.uploadProduct.url, {
             method: SummaryApi.uploadProduct.method,
             credentials: "include",
             headers: { "content-type": "application/json" },
             body: JSON.stringify(data)
-        });
+        })
 
-        const responseData = await response.json();
+        const responseData = await response.json()
 
         if(response.ok) {
-            toast.success(responseData?.message);
-            fetchData();
+            toast.success(responseData?.message)
+            fetchData()
         } else {
-            toast.error(responseData?.message);
+            toast.error(responseData?.message)
         }
 
-        onClose();
-    };
+        onClose()
+    }
 
 
     return (
-        <div className='fixed w-full  h-full bg-slate-200 bg-opacity-35 top-0 left-0 right-0 bottom-0 flex justify-center items-center'>
+        <div className="fixed w-full  h-full bg-slate-200 bg-opacity-35 top-0 left-0 right-0 bottom-0 flex justify-center items-center">
             <div className="bg-white p-4 rounded w-full max-w-2xl h-full max-h-[80%] overflow-hidden">
 
                 <div className="flex justify-between items-center pb-3">
@@ -206,7 +198,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
             }
         </div>
     )
-};
+}
 
 
-export default UploadProduct;
+export default UploadProduct

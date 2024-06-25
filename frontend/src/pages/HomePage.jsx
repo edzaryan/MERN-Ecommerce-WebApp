@@ -1,10 +1,10 @@
-import CategoryList from "../components/CategoryList";
-import BannerProduct from "../components/BannerProduct";
-import HorizontalCardProduct from "../components/HorizontalCardProduct";
-import VerticalCard from "../components/VerticalCard";
+import CategoryList from "../components/CategoryList"
+import BannerProduct from "../components/BannerProduct"
+import HorizontalCardProduct from "../components/HorizontalCardProduct"
+import VerticalCard from "../components/VerticalCard"
 
 
-const Home = () => {
+const HomePage = () => {
     return (
         <div>
             <CategoryList />
@@ -25,7 +25,7 @@ const Home = () => {
             <VerticalCard category="mouse" heading="Top's Mouses" />
         </div>
     )
-};
+}
 
 
-export default Home;
+export default HomePage

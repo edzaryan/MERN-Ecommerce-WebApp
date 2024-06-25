@@ -1,8 +1,8 @@
-import { useState } from "react";
-import ROLE from "../common/role";
-import { IoMdClose } from "react-icons/io";
-import SummaryApi from "../common";
-import { toast } from "react-toastify";
+import {useState} from "react"
+import ROLE from "../common/role"
+import {IoMdClose} from "react-icons/io"
+import SummaryApi from "../common"
+import {toast} from "react-toastify"
 
 
 export const ChangeUserRole = ({ 
@@ -13,11 +13,11 @@ export const ChangeUserRole = ({
     onClose, 
     callFunc 
 }) => {
-    const [userRole, setUserRole] = useState(role);
+    const [userRole, setUserRole] = useState(role)
 
     const handleOnChangeSelect = (e) => {
-        setUserRole(e.target.value);
-    };
+        setUserRole(e.target.value)
+    }
 
     const updateUserRole = async () => {
         const fetchResponse = await fetch(SummaryApi.updateUser.url, {
@@ -30,20 +30,18 @@ export const ChangeUserRole = ({
                 userId,
                 role: userRole
             })
-        });
+        })
 
-        const responseData = await fetchResponse.json();
-
-        console.log(responseData);
+        const responseData = await fetchResponse.json()
 
         if (responseData.success) {
-            toast.success("User role updated successfully");
-            onClose();
-            callFunc();
+            toast.success("User role updated successfully")
+            onClose()
+            callFunc()
         } else {
-            toast.error(responseData.message);
+            toast.error(responseData.message)
         }
-    };
+    }
 
     return (
         <div className="fixed top-0 bottom-0 left-0 right-0 w-full h-full z-10 flex justify-between items-center bg-slate-200 bg-opacity-50">
@@ -69,8 +67,8 @@ export const ChangeUserRole = ({
                 </button>
             </div>
         </div>
-    );
-};
+    )
+}
 
 
-export default ChangeUserRole;
+export default ChangeUserRole

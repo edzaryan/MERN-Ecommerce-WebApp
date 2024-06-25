@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import Context from "../context";
 
 
-const Login = () => {
+const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [data, setData] = useState({
         email: "",
@@ -104,4 +104,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default LoginPage;

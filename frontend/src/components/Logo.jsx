@@ -27,7 +27,7 @@ const Logo = ({ w, h }) => {
             </svg>
         </>
     )
-};
+}
 
 
-export default Logo;
+export default Logo

@@ -1,19 +1,19 @@
-const addToCardModel = require("../../models/cartProductModel");
+const addToCardModel = require("../../models/cartProductModel")
 
 
 const addToCartViewProduct = async (req, res) => {
     try {
-        const currentUser = req.userId;
+        const currentUser = req.userId
 
         const allProducts = await addToCardModel.find({
             userId: currentUser
-        }).populate("productId");
+        }).populate("productId")
 
         res.json({
             data: allProducts,
             success: true,
             error: false
-        });
+        })
     } catch (err) {
         res.json({
             message: err.message || err,
@@ -21,7 +21,7 @@ const addToCartViewProduct = async (req, res) => {
             success: false
         })
     }
-};
+}
 
 
-module.exports = addToCartViewProduct;
+module.exports = addToCartViewProduct

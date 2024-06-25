@@ -1,14 +1,14 @@
-import {useCallback, useContext, useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
-import SummaryApi from "../common";
-import { FaStar, FaStarHalf } from "react-icons/fa";
-import displayINRCurrency from "../helpers/displayCurrency";
-import CategoryWiseProductDisplay from "../components/CategoryWiseProductDisplay";
-import addToCart from "../helpers/addToCart";
-import Context from "../context";
+import {useCallback, useContext, useEffect, useState} from "react"
+import {useNavigate, useParams} from "react-router-dom"
+import SummaryApi from "../common"
+import { FaStar, FaStarHalf } from "react-icons/fa"
+import displayINRCurrency from "../helpers/displayCurrency"
+import CategoryWiseProductDisplay from "../components/CategoryWiseProductDisplay"
+import addToCart from "../helpers/addToCart"
+import Context from "../context"
 
 
-const ProductDetails = () => {
+const ProductDetailsPage = () => {
     const [data, setData] = useState({
         productName: "",
         brandName: "",
@@ -17,18 +17,18 @@ const ProductDetails = () => {
         description: "",
         price: "",
         sellingPrice: ""
-    });
-    const params = useParams();
-    const [loading, setLoading] = useState(true);
-    const productImageListLoading = new Array(5).fill(null);
-    const [activeImage, setActiveImage] = useState("");
+    })
+    const params = useParams()
+    const [loading, setLoading] = useState(true)
+    const productImageListLoading = new Array(5).fill(null)
+    const [activeImage, setActiveImage] = useState("")
     const [zoomImageCoordinate, setZoomImageCoordinate] = useState({
         x: 0,
         y: 0
-    });
-    const [zoomImage, setZoomImage] = useState(false);
-    const { fetchUserAddToCart } = useContext(Context);
-    const navigate = useNavigate();
+    })
+    const [zoomImage, setZoomImage] = useState(false)
+    const { fetchUserAddToCart } = useContext(Context)
+    const navigate = useNavigate()
 
 
     const fetchProductDetails = async () => {
@@ -41,48 +41,48 @@ const ProductDetails = () => {
                 body: JSON.stringify({
                     productId: params?.id
                 })
-            });
+            })
 
-            const dataResponse = await response.json();
-            setData(dataResponse?.data);
-            setActiveImage(dataResponse?.data?.productImage[0]);
+            const dataResponse = await response.json()
+            setData(dataResponse?.data)
+            setActiveImage(dataResponse?.data?.productImage[0])
         } catch (error) {
-            console.error('Failed to fetch product details:', error);
+            console.error("Failed to fetch product details:", error)
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    };
+    }
 
     const handleMouseEnterProduct = imageUrl => {
-        setActiveImage(imageUrl);
-    };
+        setActiveImage(imageUrl)
+    }
 
     const handleLeaveImageZoom = () => {
-        setZoomImage(false);
-    };
+        setZoomImage(false)
+    }
 
     const handleAddToCart = async (e, id) => {
-        await addToCart(e, id);
-        fetchUserAddToCart();
-    };
+        await addToCart(e, id)
+        fetchUserAddToCart()
+    }
 
     const handleZoomImage = useCallback((e) => {
-        setZoomImage(true);
-        const { left, top, width, height } = e.target.getBoundingClientRect();
-        const x = (e.clientX - left) / width;
-        const y = (e.clientY - top) / height;
-        setZoomImageCoordinate({ x, y });
-    }, [zoomImageCoordinate]);
+        setZoomImage(true)
+        const { left, top, width, height } = e.target.getBoundingClientRect()
+        const x = (e.clientX - left) / width
+        const y = (e.clientY - top) / height
+        setZoomImageCoordinate({ x, y })
+    }, [zoomImageCoordinate])
 
     const handleBuyProduct = async (e, id) => {
-        await addToCart(e, id);
-        fetchUserAddToCart();
-        navigate("/cart");
-    };
+        await addToCart(e, id)
+        fetchUserAddToCart()
+        navigate("/cart")
+    }
 
     useEffect(() => {
-        fetchProductDetails();
-    }, [params.id]);
+        fetchProductDetails()
+    }, [params.id])
 
 
     return (
@@ -133,54 +133,54 @@ const ProductDetails = () => {
                     </div>
                 </div>
                 {loading ? (
-                    <div className='grid gap-1 w-full'>
-                        <p className='bg-slate-200 animate-pulse h-6 lg:h-8 w-full rounded-full inline-block'></p>
-                        <h2 className='text-2xl lg:text-4xl font-medium h-6 lg:h-8 bg-slate-200 animate-pulse w-full'></h2>
-                        <p className='capitalize text-slate-400 bg-slate-200 min-w-[100px] animate-pulse h-6 lg:h-8 w-full'></p>
-                        <div className='text-red-600 bg-slate-200 h-6 lg:h-8 animate-pulse flex items-center gap-1 w-full'></div>
-                        <div className='flex items-center gap-2 text-2xl lg:text-3xl font-medium my-1 h-6 lg:h-8 animate-pulse w-full'>
-                            <p className='text-red-600 bg-slate-200 w-full'></p>
-                            <p className='text-slate-400 line-through bg-slate-200 w-full'></p>
+                    <div className="grid gap-1 w-full">
+                        <p className="bg-slate-200 animate-pulse h-6 lg:h-8 w-full rounded-full inline-block"></p>
+                        <h2 className="text-2xl lg:text-4xl font-medium h-6 lg:h-8 bg-slate-200 animate-pulse w-full"></h2>
+                        <p className="capitalize text-slate-400 bg-slate-200 min-w-[100px] animate-pulse h-6 lg:h-8 w-full"></p>
+                        <div className="text-red-600 bg-slate-200 h-6 lg:h-8 animate-pulse flex items-center gap-1 w-full"></div>
+                        <div className="flex items-center gap-2 text-2xl lg:text-3xl font-medium my-1 h-6 lg:h-8 animate-pulse w-full">
+                            <p className="text-red-600 bg-slate-200 w-full"></p>
+                            <p className="text-slate-400 line-through bg-slate-200 w-full"></p>
                         </div>
-                        <div className='flex items-center gap-3 my-2 w-full'>
-                            <button className='h-6 lg:h-8 bg-slate-200 rounded animate-pulse w-full'></button>
-                            <button className='h-6 lg:h-8 bg-slate-200 rounded animate-pulse w-full'></button>
+                        <div className="flex items-center gap-3 my-2 w-full">
+                            <button className="h-6 lg:h-8 bg-slate-200 rounded animate-pulse w-full"></button>
+                            <button className="h-6 lg:h-8 bg-slate-200 rounded animate-pulse w-full"></button>
                         </div>
-                        <div className='w-full'>
-                            <p className='text-slate-600 font-medium my-1 h-6 lg:h-8 bg-slate-200 rounded animate-pulse w-full'></p>
-                            <p className='bg-slate-200 rounded animate-pulse h-10 lg:h-12 w-full'></p>
+                        <div className="w-full">
+                            <p className="text-slate-600 font-medium my-1 h-6 lg:h-8 bg-slate-200 rounded animate-pulse w-full"></p>
+                            <p className="bg-slate-200 rounded animate-pulse h-10 lg:h-12 w-full"></p>
                         </div>
                     </div>
                 ) : (
-                    <div className='flex flex-col gap-1'>
-                        <p className='bg-red-200 text-red-600 px-2 rounded-full inline-block w-fit'>{data?.brandName}</p>
-                        <h2 className='text-2xl lg:text-4xl font-medium'>{data?.productName}</h2>
-                        <p className='capitalize text-slate-400'>{data?.category}</p>
-                        <div className='text-red-600 flex items-center gap-1'>
+                    <div className="flex flex-col gap-1">
+                        <p className="bg-red-200 text-red-600 px-2 rounded-full inline-block w-fit">{data?.brandName}</p>
+                        <h2 className="text-2xl lg:text-4xl font-medium">{data?.productName}</h2>
+                        <p className="capitalize text-slate-400">{data?.category}</p>
+                        <div className="text-red-600 flex items-center gap-1">
                             <FaStar />
                             <FaStar />
                             <FaStar />
                             <FaStar />
                             <FaStarHalf />
                         </div>
-                        <div className='flex items-center gap-2 text-2xl lg:text-3xl font-medium my-1'>
-                            <p className='text-red-600'>{displayINRCurrency(data.sellingPrice)}</p>
-                            <p className='text-slate-400 line-through'>{displayINRCurrency(data.price)}</p>
+                        <div className="flex items-center gap-2 text-2xl lg:text-3xl font-medium my-1">
+                            <p className="text-red-600">{displayINRCurrency(data.sellingPrice)}</p>
+                            <p className="text-slate-400 line-through">{displayINRCurrency(data.price)}</p>
                         </div>
-                        <div className='flex items-center gap-3 my-2'>
+                        <div className="flex items-center gap-3 my-2">
                             <button
                                 onClick={(e) => handleAddToCart(e, data?._id)}
-                                className='border-2 border-red-600 rounded px-3 py-1 min-w-[120px] text-red-600 font-medium hover:bg-red-600 hover:text-white'>
+                                className="border-2 border-red-600 rounded px-3 py-1 min-w-[120px] text-red-600 font-medium hover:bg-red-600 hover:text-white">
                                 Buy
                             </button>
                             <button
                                 onClick={(e) => handleAddToCart(e, data?._id)}
-                                className='border-2 border-red-600 rounded px-3 py-1 min-w-[120px] font-medium text-white bg-red-600 hover:text-red-600 hover:bg-white'>
+                                className="border-2 border-red-600 rounded px-3 py-1 min-w-[120px] font-medium text-white bg-red-600 hover:text-red-600 hover:bg-white">
                                 Add To Cart
                             </button>
                         </div>
                         <div>
-                            <p className='text-slate-600 font-medium my-1'>Description :</p>
+                            <p className="text-slate-600 font-medium my-1">Description :</p>
                             <p>{data?.description}</p>
                         </div>
                     </div>
@@ -191,7 +191,8 @@ const ProductDetails = () => {
                 <CategoryWiseProductDisplay category={data?.category} heading="Recommended Products" />
             )}
         </div>
-    );
-};
+    )
+}
 
-export default ProductDetails;
+
+export default ProductDetailsPage

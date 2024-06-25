@@ -1,36 +1,32 @@
-import React, { useState } from "react";
-import loginIcons from "../assets/signin.gif";
-import { FaEye } from "react-icons/fa";
-import { IoMdEyeOff } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
-import SummaryApi from "../common";
-import imageToBase64 from "../helpers/imageToBase64";
-import { toast } from "react-toastify";
+import React, {useState} from "react"
+import loginIcons from "../assets/signin.gif"
+import {FaEye} from "react-icons/fa"
+import {IoMdEyeOff} from "react-icons/io"
+import {Link, useNavigate} from "react-router-dom"
+import SummaryApi from "../common"
+import imageToBase64 from "../helpers/imageToBase64"
+import {toast} from "react-toastify"
 
 
-export const SignUp = () => {
-    const [showPassword, setShowPassword] = useState(false);
+export const SignUpPage = () => {
+    const [showPassword, setShowPassword] = useState(false)
     const [data, setData] = useState({
         name: "",
         email: "",
         password: "",
         confirmPassword: "",
         profilePicture: ""
-    });
-    const navigate = useNavigate();
-
+    })
+    const navigate = useNavigate()
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value } = e.target
     
-        setData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+        setData(prev => ({...prev, [name]: value}))
+    }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         if (data.password === data.confirmPassword) {
 
@@ -40,33 +36,30 @@ export const SignUp = () => {
                     "content-type": "application/json"
                 },
                 body: JSON.stringify(data)
-            });
+            })
 
-            const result = await response.json();
+            const result = await response.json()
             
             if (result.success) {
-                toast.success(result.message);
-                navigate("/login");
+                toast.success(result.message)
+                navigate("/login")
             }
             
             if (result.error) {
-                toast.error(result.message);
+                toast.error(result.message)
             }
         } else {
-            toast.error("Please check password and confirm password");
+            toast.error("Please check password and confirm password")
         }
-    };
+    }
 
     const handleUploadPicture = async (e) => {
-        const file = e.target.files[0];
+        const file = e.target.files[0]
 
-        const profilePicture = await imageToBase64(file);
+        const profilePicture = await imageToBase64(file)
 
-        setData(prev => ({ 
-            ...prev,
-            profilePicture
-        }));
-    };
+        setData(prev => ({...prev, profilePicture}))
+    }
 
     return (
         <section id="login">
@@ -166,6 +159,7 @@ export const SignUp = () => {
             </div>
         </section>
     )
-};
+}
 
-export default SignUp;
+
+export default SignUpPage

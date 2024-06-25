@@ -1,11 +1,11 @@
 
-const ForgotPassword = () => {
+const ForgotPasswordPage = () => {
     return (
         <div>
             ForgotPassword
         </div>
     )
-};
+}
 
 
-export default ForgotPassword;
+export default ForgotPasswordPage
